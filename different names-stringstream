@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    unordered_map<string,int> mymap;
+    string s;
+    getline(cin,s);
+    stringstream str(s);
+    string word;
+    while(str>>word)
+    {
+        mymap[word]++;
+    }
+    unordered_map<string,int>::iterator it;
+    bool flag=0;
+    for(it=mymap.begin();it!=mymap.end();it++)
+    {
+        if(it->second>1){
+        std::cout << it->first<<" "<<it->second << std::endl;
+            flag=1;
+    }
+    }
+    if(!flag)
+    {
+        cout<<"-1"<<endl;
+    }
+    
+
+    return 0;
+}
