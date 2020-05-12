@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+using namespace std;
+class student
+{
+  public:
+    string name;
+    int rollno;
+    int totalmarks;
+    
+   
+};
+	bool compare(student s1, student s2)
+    {
+        if(s1.totalmarks!=s2.totalmarks)
+        {
+            return s1.totalmarks>s2.totalmarks;
+        }
+        else
+        {
+            return s1.rollno<s2.rollno;
+        }
+    }
+int main()
+{
+    int n;
+    cin>>n;
+    student s[n];
+    string name;
+    int a,b,c;
+    for(int i=0;i<n;i++)
+    {
+        cin>>name;
+        s[i].name=name;
+        cin>>a>>b>>c;
+        s[i].rollno=i+1;
+        s[i].totalmarks=a+b+c;
+    }
+    sort(s,s+n,compare);
+    for(int i=0;i<n;i++)
+    {
+        cout<<i+1<<" "<<s[i].name<<endl;
+    }
+    
+}
