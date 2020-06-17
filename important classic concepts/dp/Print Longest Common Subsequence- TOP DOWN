@@ -1,0 +1,66 @@
+#include <iostream>
+using namespace std;
+#include<bits/stdc++.h>
+using namespace std;
+string printlcs(string x,string y, int n, int m)
+{
+    if(n==0 || m==0) return "";
+    int dp[n+1][m+1];
+    for(int i=0;i<=n;i++)
+    {
+        dp[i][0]=0;
+    }
+    for(int i=0;i<=m;i++)
+    {
+        dp[0][i]=0;
+    }
+    for(int i=1;i<=n;i++)
+    {
+        for(int j=1;j<=m;j++)
+        {
+          if(x[i-1]==y[j-1])
+            {
+                dp[i][j]=1+dp[i-1][j-1];
+            }  
+            else
+            {
+               dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+    }
+    int i=n,j=m;
+    string s="";
+    while(i>0&&j>0)
+    {
+        if(x[i-1]==y[j-1])
+        {
+            s+=x[i-1];
+            i--;
+            j--;
+        }
+        else if(dp[i][j-1]>dp[i-1][j])
+        {
+            j--;
+        }
+        else
+        {
+            i--;
+        }
+    }
+    reverse(s.begin(),s.end());
+    return s;
+}
+int main() {
+	// your code goes here
+	int t;
+	std::cin >> t;
+	while(t--)
+	{
+	    int a,b;
+    	cin>>a>>b;
+    	string x;string y;
+    	cin>>x>>y;
+    	cout<<printlcs(x,y,a,b)<<endl;
+	}
+	return 0;
+}
