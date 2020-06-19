@@ -1,0 +1,50 @@
+
+**CODE**
+
+int Solution::maxArr(vector<int> &arr) {
+    int max1=INT_MIN,min1=INT_MAX;
+    int max2=INT_MIN,min2=INT_MAX;
+    for(int i=0; i<arr.size(); i++)
+    {
+    max1=max(max1,arr[i]+i);
+    min1=min(min1,arr[i]+i);
+    max2=max(max2,arr[i]-i);
+    min2=min(min2,arr[i]-i);
+    }
+return max(abs(max1-min1),abs(max2-min2));
+}
+
+
+
+
+**EXPLANATION**
+
+This problem stumped me completely. As such, I spent the next couple of hours attempting to understand the provided solution. This is the result of that. If something is incorrect, feedback would be appreciated.
+
+Our goal is to find integers i and j, where 1 <= i, j <= N, maximizing:
+
+abs(A[i] - A[j]) + abs(i - j)
+We can split this maximization task into four cases, corresponding to the two possibilities for the sign of each of the two absolute value expressions.
+
+1: A[i] < A[j], i < j: (A[j] - A[i]) + (j - i)
+2: A[i] < A[j], i >= j: (A[j] - A[i]) + (i - j)
+3: A[i] >= A[j], i < j: (A[i] - A[j]) + (j - i)
+4: A[i] >= A[j], i >= j: (A[i] - A[j]) + (i - j)
+Normally, each of these cases would be valid only for those i, j satisfying its respective constraint. However, remembering that our task is maximization, we note that for some arbitrary i, j, the formula for the case whose constraint is met by the chosen i, j happens to also yield the maximum value out of all four possibilities. Thus, we no longer need to worry about choosing the specific case satisfied by a particular choice of i, j during our optimization process. We can instead simply evaluate all four cases over all possible choices of i, j and choose the result with maximum value. That is, our task becomes that of maximizing each of the following, for all 1 <= i, j <= N:
+
+1: (A[j] - A[i]) + (j - i)
+2: (A[j] - A[i]) + (i - j)
+3: (A[i] - A[j]) + (j - i)
+4: (A[i] - A[j]) + (i - j)
+And returning the maximum result. At this point, we can note that the first and fourth, as well as the second and third cases are equivalent. So, eliminating the two redundant cases and rewriting the remaining two slightly, we have:
+
+1: (A[j] - A[i]) + (j - i) = (A[j] + j) - (A[i] + i)
+2: (A[j] - A[i]) + (i - j) = (A[j] - j) - (A[i] - i)
+At which point, the maximum of the first for 1 <= i, j <= N is:
+
+max(A[i] + i) - min(A[i] + i)
+And the maximum of the second for 1 <= i, j <= N is:
+
+max(A[i] - i) - min(A[i] - i)
+And we simply return the greater of the two.
+
