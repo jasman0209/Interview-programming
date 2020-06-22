@@ -1,0 +1,49 @@
+SOLUTION EXPLANATION
+Note what is the net change in number of 1s in string S when we flip bits of string S.
+Say it has A 0s and B 1s. Eventually, there are B 0s and A 1s.
+
+So, number of 1s increase by A - B. We want to choose a subarray which maximises this. 
+Note, if we change 1s to -1, then sum of values will give us A - B. Then, we have to find a subarray with maximum sum, 
+which can be done via Kadane’s Algorithm.
+
+
+
+
+
+vector<int> Solution::flip(string A) {
+
+vector<int> res;
+int n=A.size();
+int i;
+int a[n]={0};
+for(i=0;i<n;i++){
+if(A[i]=='1')
+a[i]=-1;
+else
+a[i]=1;
+}
+int sum=a[0];
+int o_sum=a[0];
+int start=0;
+int s=0;
+int end=0;
+for(i=1;i<n;i++){
+int temp1=sum;
+sum=max(sum+a[i],a[i]);
+if(sum!=temp1+a[i])
+s=i;
+int temp=o_sum;
+o_sum=max(sum,o_sum);
+if(o_sum!=temp){
+start=s;
+end=i;
+}
+}
+if(o_sum<0)
+return res;
+else{
+res.push_back(start+1);
+res.push_back(end+1);
+}
+return res;
+}
