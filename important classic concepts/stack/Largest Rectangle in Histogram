@@ -1,0 +1,61 @@
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& arr) {
+        int n=arr.size();
+        if(n==0) return 0;
+        if(n==1) return arr[0];
+        vector<int> leftsmaller;
+        vector<int> rightsmaller;
+        stack <int> s;
+        for(int i=0;i<n;i++)
+         {
+             if(s.empty()) leftsmaller.push_back(-1);
+            else if(!s.empty()&&arr[s.top()]<arr[i])
+                 leftsmaller.push_back(s.top());
+            else if(!s.empty()&&arr[s.top()]>=arr[i])
+                 {
+                     while(!s.empty()&&arr[s.top()]>=arr[i])
+                     {
+                         s.pop();
+                     }
+                     if(s.empty()){leftsmaller.push_back(-1);}
+                     else{
+                     leftsmaller.push_back(s.top());}
+                 }
+             s.push(i);
+            
+         }
+        while(!s.empty())
+        {
+            s.pop();
+        }
+        for(int i=n-1;i>=0;i--)
+         {
+             if(s.empty()) {rightsmaller.push_back(n);}
+            else if(!s.empty()&&arr[s.top()]<arr[i])
+                 rightsmaller.push_back(s.top());
+            else if(!s.empty()&&arr[s.top()]>=arr[i])
+                 {
+                     while(!s.empty()&&arr[s.top()]>=arr[i])
+                     {
+                         s.pop();
+                     }
+                     if(s.empty()){rightsmaller.push_back(n);}
+                     else{
+                     rightsmaller.push_back(s.top());}
+                 }
+             s.push(i);//
+         
+         }
+        
+        reverse(rightsmaller.begin(),rightsmaller.end());
+        int mx=INT_MIN;
+        for(int i=0;i<n;i++)
+        {//cout<<leftsmaller[i]<<" "<<rightsmaller[i]<<" "<<arr[i]<<endl;
+            rightsmaller[i]=(arr[i]*(rightsmaller[i]-leftsmaller[i]-1));
+            mx=max(rightsmaller[i],mx);
+             
+        }
+        return mx;
+    }
+};
