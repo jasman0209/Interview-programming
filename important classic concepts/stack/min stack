@@ -1,0 +1,59 @@
+stack<int> s;
+    int minel;
+MinStack::MinStack() {
+    minel=INT_MAX;
+    s=stack<int>();
+}
+
+void MinStack::push(int x) {if(s.size()==0)
+        {
+            s.push(x);
+            minel=x;
+        }
+        else
+        {
+            if(x>=minel) s.push(x);
+            else
+            {
+                s.push((2*x)-minel);
+                minel=x;
+            }
+                
+        }
+        return;
+}
+
+void MinStack::pop() {
+     if(s.empty());
+        else
+        {
+            if(s.top()>=minel)
+            {
+                s.pop();
+                return;
+            }
+            else
+            {
+                minel=2*minel-s.top();
+                s.pop();
+                return;
+            }
+        }
+        return;
+
+}
+
+int MinStack::top() {if(s.empty()) return -1;
+        if(s.top()>=minel)
+            {
+                return s.top();
+            }
+        else
+            return minel;
+}
+
+int MinStack::getMin() {
+    if(s.empty()) return -1;
+    return minel;
+}
+
