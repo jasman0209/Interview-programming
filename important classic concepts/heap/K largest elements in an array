@@ -1,0 +1,17 @@
+vector<int> Solution::solve(vector<int> &A, int B) {
+    priority_queue<int,vector<int>,greater<int>> maxh;
+        for(int i=0;i<A.size();i++)
+        {
+            maxh.push(A[i]);
+            if(maxh.size()>B)
+            maxh.pop();
+        }
+    vector<int> v;
+    for(int i=0;i<B;i++)
+    {
+        int t=maxh.top();
+        maxh.pop();
+        v.push_back(t);
+    }
+    return v;
+}
