@@ -1,0 +1,35 @@
+bool helper(int g[][MAX],int v,int i,int c,bool *visited,bool* col)
+{
+    visited[i]=1;
+    col[i]=c;
+    for(int j=0;j<v;j++)
+    {
+        if(g[i][j]&&visited[j]==0)
+        {
+            if(helper(g,v,j,!c,visited,col)==false)
+            return false;
+            
+        }
+        else if(g[i][j])
+            if(col[i]==col[j])
+            return false;
+    }
+    return true;
+}
+bool isBipartite(int G[][MAX],int V)
+{
+    bool *visited=new bool[V]();
+    bool *col=new bool[V]();
+    for(int i=0;i<V;i++)
+    {
+        if(visited[i]==0)
+        {
+            bool a=helper(G,V,i,0,visited,col);
+            if(!a)
+            return false;
+        }
+        
+    }
+    return true;
+     //Your code here
+}
