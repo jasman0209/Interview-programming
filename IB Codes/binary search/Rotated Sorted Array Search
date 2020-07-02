@@ -1,0 +1,49 @@
+int bs(const vector<int> &arr,int b,int start,int end)
+{
+    while(start<=end)
+    {
+        int mid=start+(end-start)/2;
+        if(arr[mid]==b) return mid;
+        
+        if(b<arr[mid])
+        {
+            end=mid-1;
+        }
+        if(b>arr[mid])
+        {
+            start=mid+1;
+        }
+    }
+    return -1;
+}
+int Solution::search(const vector<int> &arr, int b) {
+    int n=arr.size();
+    int start=0,end=n-1;
+    int mn;
+    while(start<=end)
+    {
+        int mid=start+(end-start)/2;
+        if(arr[mid]==b) return mid;
+        int prev=(mid-1)%n,next=(mid+1)%n;
+        if(arr[mid]<=arr[end]&&arr[start]<=arr[mid])
+       { mn=start; break;}
+        if(arr[mid]<=prev&&arr[mid]<=next)
+        {
+            mn=mid;
+            break;
+        }
+        if(arr[start]<=arr[mid]) start=mid+1;
+        if(arr[mid]<=arr[end]) end=mid-1;
+    }
+    if(b==arr[mn])
+    return mn;
+    int a,bb;
+    if(mn-1>=0)
+    a=bs(arr,b,0,mn-1);
+    if(mn+1<=n-1)
+    bb=bs(arr,b,mn+1,n-1);
+    
+    if(a!=-1) return a;
+    else if(bb!=-1) return bb;
+    else return -1;
+}
