@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+bool *visited;
+void dfs(vector<int> g[],int i)
+{
+    visited[i]=1;
+    for(int j=0;j<g[i].size();j++)
+    {
+        if(visited[g[i][j]]==0)
+        dfs(g,g[i][j]);
+    }
+}
+int main() {
+    int v,e;
+    cin >> v >> e;
+    vector<int> g[v];
+    int a,b;
+    for(int i=0;i<e;i++)
+    {
+        cin>>a>>b;
+        g[a].push_back(b);
+        g[b].push_back(a);
+        
+    }
+    int start,end;
+    cin>>start>>end;
+    visited=new bool[v]();
+    dfs(g,start);
+    if(visited[end])
+    {
+        cout<<"true"<<endl;
+    }
+    else
+    cout<<"false\n";
+
+  return 0;
+}
