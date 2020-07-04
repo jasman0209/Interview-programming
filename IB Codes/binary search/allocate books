@@ -1,0 +1,35 @@
+bool isvalid(vector<int> &arr, int stud,int k,int n)
+{
+    int count=1,sum=0;
+    for(int i=0;i<n;i++)
+    {
+        sum+=arr[i];
+        if(sum>k)
+        {
+            count++;
+            if(count>stud) return false;
+            sum=arr[i];
+        }
+    }
+    return true;
+}
+int Solution::books(vector<int> &arr, int stud) {
+    int n=arr.size();
+    if(n<stud)
+    return -1;
+    int start=0,end=0;
+    for(int i=0;i<n;i++)
+    {
+        start=max(start,arr[i]);
+        end+=arr[i];
+    }
+    int ans=-1;
+    while(start<=end)
+    {
+        int mid=start+(end-start)/2;
+        if(isvalid(arr,stud,mid,n)){ ans=mid;end=mid-1;}
+        else 
+        start=mid+1;
+    }
+    return ans;
+}
