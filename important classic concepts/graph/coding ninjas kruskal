@@ -1,0 +1,63 @@
+#include<bits/stdc++.h>
+using namespace std;
+class edge
+{
+    public:
+        int source;
+        int destination;
+        int weight;
+};
+bool compare(edge a,edge b)
+{
+    return a.weight<b.weight;
+}
+int findparent(int v,int *parent)
+{
+    if(parent[v]==v)return v;
+    return findparent(parent[v],parent);
+}
+void kruskal(edge *input,int n,int e)
+{
+    sort(input,input+e,compare);
+    edge *out=new edge[n-1];
+    int *parent=new int[n];
+    for(int i=0;i<n;i++) parent[i]=i;
+    int cnt=0;
+    int i=0;
+    while(cnt!=n-1)
+    {
+        edge current=input[i];
+        int sp=findparent(current.source,parent);
+        int destp=findparent(current.destination,parent);
+
+        if(sp!=destp)
+        {
+
+            out[cnt]=current;
+            cnt++;
+        }
+        i++;
+    }
+    for(int i=0;i<n-1;i++)
+    {
+        if(out[i].source<out[i].destination)
+            cout<<out[i].source<<" "<<out[i].destination<<" "<<out[i].weight<<"\n";
+        if(out[i].destination<out[i].source) cout<<out[i].destination<<" "<<out[i].source<<" "<<out[i].weight<<endl;
+    }
+}
+int main()
+{
+    int n,e;
+    cin>>n>>e;
+    edge *input=new edge[e];
+    for(int i=0;i<e;i++)
+    {
+        int a,b,c;
+        cin>>a>>b>>c;
+        input[i].source=a;
+        input[i].destination=b;
+        input[i].weight=c;
+    }
+    kruskal(input,n,e);
+
+}
