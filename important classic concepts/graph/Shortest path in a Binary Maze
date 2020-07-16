@@ -1,0 +1,56 @@
+#include<bits/stdc++.h>
+using namespace std;
+int row[]={-1,0,0,1};
+int col[]={0,1,-1,0};
+int bfs(int s,int d,bool visited[][21],int arr[][21],int n,int m)
+{
+
+    if(!arr[0][0]||!arr[s][d]) return -1;
+    queue<pair<pair<int,int>,int>> q;
+    visited[0][0]=1;
+    q.push({{0,0},0});
+    while(!q.empty())
+    {
+
+        pair<pair<int,int>,int> p=q.front();
+        pair<int,int> pt=p.first;
+        //cout<<"a    "<<pt.first<<" "<<pt.second<<endl;
+        if(pt.first==s&&pt.second==d) return p.second;
+        q.pop();
+        for(int i=0;i<4;i++)
+        {
+            int x=pt.first+row[i];
+            int y=pt.second+col[i];
+            if(x>=0&&y>=0&&x<n&&y<m&&arr[x][y]&&!visited[x][y])
+            q.push({{x,y},p.second+1}),visited[x][y]=1;
+        }
+
+    }
+    return -1;
+}
+int main()
+ {
+	//code
+	int t;
+	cin>>t;
+	while(t--)
+	{
+	    int n,m;
+	    cin>>n>>m;
+	    int arr[n][21];
+	    bool visited[n][21];
+	    memset(visited,0,sizeof(visited));
+	    for(int i=0;i<n;i++)
+	    {
+	        for(int j=0;j<m;j++)
+	        {
+	            cin>>arr[i][j];
+	        }
+	    }
+	    int s,d;
+	    cin>>s>>d;
+	    cout<<bfs(s,d,visited,arr,n,m)<<endl;
+
+	}
+	return 0;
+}
